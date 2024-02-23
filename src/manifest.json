@@ -1,0 +1,19 @@
+{
+  "name": "TemplateModule",
+  "version": "0.0.1",
+  "namespace": "Nekres.TemplateModule",
+  "package": "TemplateModule.dll",
+  "manifest_version": 1,
+  "description": "A template module for Blish-HUD.",
+  "dependencies": {
+    "bh.blishhud": ">=1.0.0"
+  },
+  "enabled_without_gw2": false,
+  "url": "https://github.com/agaertner/bhm-module-template",
+  "contributors": [
+    {
+      "name": "Nekres",
+      "username": "Nekres.1943"
+    }
+  ]
+}
