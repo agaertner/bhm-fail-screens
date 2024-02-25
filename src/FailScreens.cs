@@ -5,13 +5,15 @@ using Blish_HUD.Settings;
 using System;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Nekres.FailScreens.Core.Services;
 
-namespace Nekres.TemplateModule {
+namespace Nekres.FailScreens {
     [Export(typeof(Module))]
-    public class TemplateModule : Module {
-        internal static readonly Logger Logger = Logger.GetLogger<TemplateModule>();
+    public class FailScreensModule : Module {
+        internal static readonly Logger Logger = Logger.GetLogger<FailScreensModule>();
 
-        internal static TemplateModule Instance { get; private set; }
+        internal static FailScreensModule Instance { get; private set; }
 
         #region Service Managers
         internal SettingsManager SettingsManager => this.ModuleParameters.SettingsManager;
@@ -21,25 +23,35 @@ namespace Nekres.TemplateModule {
         #endregion
 
         [ImportingConstructor]
-        public TemplateModule([Import("ModuleParameters")] ModuleParameters moduleParameters) : base(moduleParameters) => Instance = this;
+        public FailScreensModule([Import("ModuleParameters")] ModuleParameters moduleParameters) : base(moduleParameters) => Instance = this;
+
+        internal StateService State;
 
         protected override void DefineSettings(SettingCollection settings) {
         }
 
         protected override void Initialize() {
+            State = new StateService();
+        }
+         
+        protected override async Task LoadAsync() {
+            await State.SetupLockFiles(StateService.State.Defeated);
         }
 
-        protected override async Task LoadAsync() {
-
+        protected override void Update(GameTime gameTime) {
+            State?.Update();
         }
 
         protected override void OnModuleLoaded(EventArgs e) {
+
             // Base handler must be called
             base.OnModuleLoaded(e);
         }
 
         /// <inheritdoc />
         protected override void Unload() {
+            State?.Dispose();
+
             // All static members must be manually unset
             Instance = null;
         }

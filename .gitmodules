@@ -1,0 +1,3 @@
+[submodule "submodules/bhud-extended"]
+	path = submodules/bhud-extended
+	url = https://github.com/agaertner/bhud-extended.git
