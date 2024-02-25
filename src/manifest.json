@@ -1,19 +1,19 @@
 {
-    "name": "Fail Screens",
-    "version": "0.0.1",
-    "namespace": "Nekres.FailScreens",
-    "package": "FailScreensModule.dll",
-    "manifest_version": 1,
-    "description": "Allows to customize the defeated screen.",
-    "dependencies": {
-        "bh.blishhud": ">=1.0.0"
-    },
-    "enabled_without_gw2": false,
-    "url": "https://github.com/agaertner/bhm-fail-screens",
-    "contributors": [
-        {
-            "name": "Nekres",
-            "username": "Nekres.1943"
-        }
-    ]
+  "name": "Fail Screens",
+  "version": "0.1.4",
+  "namespace": "Nekres.FailScreens",
+  "package": "FailScreensModule.dll",
+  "manifest_version": 1,
+  "description": "Allows to customize the defeated screen.",
+  "dependencies": {
+    "bh.blishhud": ">=1.0.0"
+  },
+  "enabled_without_gw2": false,
+  "url": "https://github.com/agaertner/bhm-fail-screens",
+  "contributors": [
+    {
+      "name": "Nekres",
+      "username": "Nekres.1943"
+    }
+  ]
 }
