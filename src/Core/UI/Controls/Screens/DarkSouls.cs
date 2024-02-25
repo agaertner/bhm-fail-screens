@@ -62,9 +62,11 @@ namespace Nekres.FailScreens.Core.UI.Controls {
 
             var textBounds = new Rectangle(centerX,  centerY, width, height);
 
+            // Draw background
             var rect = new Rectangle(bounds.X, bounds.Y, bounds.Width, bounds.Height + 1);
             spriteBatch.DrawOnCtrl(this, ContentService.Textures.Pixel, rect, Color.Black * 0.7f * _bgOpacityPercent);
 
+            // Draw text texture
             spriteBatch.DrawOnCtrl(this, _textTex, textBounds, _textColor * _textOpacityPercent);
         }
     }
