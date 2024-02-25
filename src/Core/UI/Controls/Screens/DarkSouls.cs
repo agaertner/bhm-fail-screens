@@ -31,6 +31,7 @@ namespace Nekres.FailScreens.Core.UI.Controls {
 
         protected override void DisposeControl() {
             _soundEffect?.Dispose();
+            _textTex?.Dispose();
             base.DisposeControl();
         }
 
