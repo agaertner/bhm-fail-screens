@@ -24,11 +24,6 @@ namespace Nekres.FailScreens.Core.UI.Controls {
             PlayAnimation();
         }
 
-        protected override void OnShown(EventArgs e) {
-            _soundEffect?.Play(GameService.GameIntegration.Audio.Volume, 0, 0);
-            base.OnShown(e);
-        }
-
         protected override void DisposeControl() {
             _soundEffect?.Dispose();
             _textTex?.Dispose();

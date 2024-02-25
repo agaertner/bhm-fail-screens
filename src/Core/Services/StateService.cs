@@ -1,19 +1,16 @@
 ﻿using Blish_HUD;
 using Blish_HUD.Controls;
+using Blish_HUD.Extended;
+using Nekres.FailScreens.Core.UI.Controls;
 using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Blish_HUD.Extended;
-using Nekres.FailScreens.Core.UI.Controls;
 
 namespace Nekres.FailScreens.Core.Services {
     internal class StateService : IDisposable {
         public enum State {
             StandBy,
-            Mounted,
-            Battle,
-            Competitive,
             Defeated
         }
 
@@ -32,7 +29,7 @@ namespace Nekres.FailScreens.Core.Services {
                 if (File.Exists(path)) {
                     var lines = File.ReadAllText(path, Encoding.UTF8);
                     if (lines.Equals(relLockFilePath)) {
-                        ScreenNotification.ShowNotification($"{state} playlist already exists.");
+                        //ScreenNotification.ShowNotification($"{state} playlist already exists.");
                         return;
                     }
                     File.Copy(path, Path.Combine(DirectoryUtil.MusicPath, $"{state}.backup.m3u"), true);
