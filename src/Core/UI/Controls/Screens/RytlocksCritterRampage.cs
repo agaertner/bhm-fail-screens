@@ -10,6 +10,7 @@ using System.ComponentModel;
 namespace Nekres.FailScreens.Core.UI.Controls.Screens {
     internal class RytlocksCritterRampage : Control {
 
+        //TODO: Replace with TextureData
         private Texture2D _sadRytlockSheet0;
         //private Texture2D _sadRytlockSheet1;
         //private Texture2D _sadRytlockSheet2;
