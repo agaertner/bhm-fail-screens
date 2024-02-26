@@ -1,15 +1,15 @@
 {
-  "name": "TemplateModule",
-  "version": "0.0.1",
-  "namespace": "Nekres.TemplateModule",
-  "package": "TemplateModule.dll",
+  "name": "Fail Screens",
+  "version": "0.2.0",
+  "namespace": "Nekres.FailScreens",
+  "package": "FailScreensModule.dll",
   "manifest_version": 1,
-  "description": "A template module for Blish-HUD.",
+  "description": "Allows you to calibrate the amount of emotional damage received upon defeat.",
   "dependencies": {
     "bh.blishhud": ">=1.0.0"
   },
   "enabled_without_gw2": false,
-  "url": "https://github.com/agaertner/bhm-module-template",
+  "url": "https://github.com/agaertner/bhm-fail-screens",
   "contributors": [
     {
       "name": "Nekres",
