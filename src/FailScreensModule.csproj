@@ -243,8 +243,12 @@
     <Reference Include="System.Xml.ReaderWriter" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Services\DefeatedService.cs" />
     <Compile Include="Core\Services\StateService.cs" />
+    <Compile Include="Core\UI\Controls\Screens\RytlocksCritterRampage.cs" />
+    <Compile Include="Core\UI\Controls\Screens\GrandTheftAuto.cs" />
     <Compile Include="Core\UI\Controls\Screens\DarkSouls.cs" />
+    <Compile Include="Core\Utils\AnimationUtil.cs" />
     <Compile Include="Core\Utils\FileUtil.cs" />
     <Compile Include="FailScreens.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -25,13 +25,22 @@ namespace Nekres.FailScreens {
         [ImportingConstructor]
         public FailScreensModule([Import("ModuleParameters")] ModuleParameters moduleParameters) : base(moduleParameters) => Instance = this;
 
-        internal StateService State;
+        internal StateService    State;
+        internal DefeatedService Defeated;
+
+        internal SettingEntry<DefeatedService.FailScreens> FailScreen;
+        internal SettingEntry<bool>                        Random;
 
         protected override void DefineSettings(SettingCollection settings) {
+            var visualsCol = settings.AddSubCollection("visuals", true, () => "Defeated Screen");
+            FailScreen = visualsCol.DefineSetting("fail_screen", DefeatedService.FailScreens.DarkSouls, () => "Appearance", () => "Visual to display upon defeat.");
+            Random     = visualsCol.DefineSetting("random",      true,                                  () => "Randomize", () => "Ignores selection if set.");
+
         }
 
         protected override void Initialize() {
-            State = new StateService();
+            State    = new StateService();
+            Defeated = new DefeatedService();
         }
          
         protected override async Task LoadAsync() {
@@ -50,8 +59,8 @@ namespace Nekres.FailScreens {
 
         /// <inheritdoc />
         protected override void Unload() {
+            Defeated?.Dispose();
             State?.Dispose();
-
             // All static members must be manually unset
             Instance = null;
         }

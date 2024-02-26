@@ -4,7 +4,7 @@
     "namespace": "Nekres.FailScreens",
     "package": "FailScreensModule.dll",
     "manifest_version": 1,
-    "description": "Allows to customize the defeated screen.",
+    "description": "Allows you to calibrate the amount of emotional damage received upon defeat.",
     "dependencies": {
         "bh.blishhud": ">=1.0.0"
     },

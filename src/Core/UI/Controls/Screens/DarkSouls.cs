@@ -5,9 +5,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.ComponentModel;
 
-namespace Nekres.FailScreens.Core.UI.Controls {
-    internal class DarkSoulsDeath : Control {
+namespace Nekres.FailScreens.Core.UI.Controls.Screens {
+    internal class DarkSouls : Control {
 
         private Color       _textColor;
         private Texture2D   _textTex; // font size: 125px, image size: 960x540
@@ -16,12 +17,19 @@ namespace Nekres.FailScreens.Core.UI.Controls {
         private float       _textScalePercent = 0.5f;
         private float       _bgOpacityPercent;
 
-        public DarkSoulsDeath() {
+        public DarkSouls() {
             _textColor   = new Color(149, 31, 32);
-            _soundEffect = FailScreensModule.Instance.ContentsManager.GetSound("audio/darksouls_death.wav");
-            _soundEffect?.Play(GameService.GameIntegration.Audio.Volume, 0, 0);
-            _textTex = FailScreensModule.Instance.ContentsManager.GetTexture($"screens/darksouls/{GameService.Overlay.UserLocale.Value.SupportedOrDefault().Code()}-darksouls.png");
+            _soundEffect = FailScreensModule.Instance.ContentsManager.GetSound("screens/darksouls/darksouls_death.wav");
+            _textTex     = FailScreensModule.Instance.ContentsManager.GetTexture($"screens/darksouls/{GameService.Overlay.UserLocale.Value.SupportedOrDefault().Code()}-darksouls.png");
             PlayAnimation();
+
+            PropertyChanged += OnPropertyChanged;
+        }
+
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e) {
+            if (e.PropertyName.Equals("Parent") && Parent != null) {
+                Size = Parent.Size;
+            }
         }
 
         protected override void DisposeControl() {
@@ -35,6 +43,8 @@ namespace Nekres.FailScreens.Core.UI.Controls {
         }
 
         private void PlayAnimation() {
+            _soundEffect?.Play(GameService.GameIntegration.Audio.Volume, 0, 0);
+
             // Animate text fade
             GameService.Animation.Tweener
                                    .Tween(this, new { _textOpacityPercent = 1f}, 2)
@@ -45,10 +55,14 @@ namespace Nekres.FailScreens.Core.UI.Controls {
 
             // Animate background fade
             GameService.Animation.Tweener.Tween(this, new { _bgOpacityPercent = 1f }, 1f)
-                                     .RepeatDelay(6).Repeat(1).Reflect();
+                                     .RepeatDelay(6).Repeat(1).Reflect().OnComplete(Dispose);
         }
-
+        
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds) {
+            if (Parent == null) {
+                return;
+            }
+
             var width  = (int)Math.Round(_textScalePercent * _textTex.Width);
             var height = (int)Math.Round(_textScalePercent * _textTex.Height);
 
