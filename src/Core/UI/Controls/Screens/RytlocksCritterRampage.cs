@@ -59,7 +59,7 @@ namespace Nekres.FailScreens.Core.UI.Controls.Screens {
         }
 
         private void PlayAnimation() {
-            _soundEffect?.Play(GameService.GameIntegration.Audio.Volume, 0, 0);
+            _soundEffect?.Play(FailScreensModule.Instance.SoundVolume, 0, 0);
 
             // Animate fade
             GameService.Animation.Tweener

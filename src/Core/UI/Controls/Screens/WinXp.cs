@@ -36,7 +36,7 @@ namespace Nekres.FailScreens.Core.UI.Controls.Screens {
             _blueScreenColor = new Color(0, 121, 217);
             _blueScreenSmile = ":(";
             _soundEffect     = FailScreensModule.Instance.ContentsManager.GetSound("screens/winxp/winxp-error.wav");
-            _errorBoxTex     = FailScreensModule.Instance.ContentsManager.GetTexture($"screens/winxp/winxp-error.png");
+            _errorBoxTex     = FailScreensModule.Instance.ContentsManager.GetTexture("screens/winxp/winxp-error.png");
 
             _smileFont = FailScreensModule.Instance.ContentsManager.GetBitmapFont("fonts/CONSOLA.TTF", 250);
             _descFont  = FailScreensModule.Instance.ContentsManager.GetBitmapFont("fonts/CONSOLA.TTF", 40);
@@ -71,8 +71,8 @@ namespace Nekres.FailScreens.Core.UI.Controls.Screens {
 
         private void PlayAnimation() {
             _timer = GameService.Animation.Tweener.Timer(0.2f).Repeat(10).OnRepeat(CreateBox).OnComplete(() => {
-                _timer = GameService.Animation.Tweener.Timer(0.2f).OnComplete(() => { // fix: OnComplete is called before final repeat has completed.
-                    _soundEffect?.Play(GameService.GameIntegration.Audio.Volume, 0, 0);
+                _timer = GameService.Animation.Tweener.Timer(0.15f).OnComplete(() => { // fix: OnComplete is called before final repeat has completed.
+                    _soundEffect?.Play(FailScreensModule.Instance.SoundVolume, 0, 0);
 
                     _timer = GameService.Animation.Tweener.Timer(0.5f).OnComplete(() => {
                         _blueScreenOpacity = 1f;
@@ -84,7 +84,7 @@ namespace Nekres.FailScreens.Core.UI.Controls.Screens {
         }
 
         private void CreateBox() {
-            _soundEffect?.Play(GameService.GameIntegration.Audio.Volume, 0, 0); // duration: 3s
+            _soundEffect?.Play(FailScreensModule.Instance.SoundVolume, 0, 0); // duration: 3s
 
             GameService.Animation.Tweener.Timer(0.5f).OnComplete(() => {
                 _errorBoxRands.Add(new Point(RandomUtil.GetRandom(-500, 500), RandomUtil.GetRandom(-500, 500)));
