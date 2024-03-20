@@ -10,7 +10,8 @@ namespace Nekres.FailScreens.Core.Services {
         public enum FailScreens {
             DarkSouls,
             GrandTheftAuto,
-            RytlocksCritterRampage
+            RytlocksCritterRampage,
+            Windows
         }
 
         private Control _failScreen;
@@ -49,6 +50,7 @@ namespace Nekres.FailScreens.Core.Services {
                 FailScreens.DarkSouls              => new DarkSouls(),
                 FailScreens.GrandTheftAuto         => new GrantTheftAuto(),
                 FailScreens.RytlocksCritterRampage => new RytlocksCritterRampage(),
+                FailScreens.Windows                => new WinXp(),
                 _                                  => null
             };
         }

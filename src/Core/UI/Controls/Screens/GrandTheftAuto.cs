@@ -50,7 +50,7 @@ namespace Nekres.FailScreens.Core.UI.Controls.Screens {
         }
 
         private void PlayAnimation() {
-            _soundEffect?.Play(GameService.GameIntegration.Audio.Volume, 0, 0);
+            _soundEffect?.Play(FailScreensModule.Instance.SoundVolume, 0, 0);
 
             // Animate photo opacity
             GameService.Animation.Tweener.Tween(this, new { _photoOpacityPercent = 0.6f }, 0.15f)

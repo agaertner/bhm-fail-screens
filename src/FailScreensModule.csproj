@@ -38,7 +38,21 @@
     <Compile Include="..\submodules\bhud-extended\**\*.cs" Link="_Submodules\%(RecursiveDir)%(Filename)%(Extension)" />
     <!-- Exclude AssemblyInfo.cs of submodule projects to avoid duplication error (Compile Error CS0579) -->
     <Compile Remove="..\submodules\**\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="..\submodules\bhud-extended\**\Resources\*.png" Link="_Submodules\%(RecursiveDir)%(Filename)%(Extension)" />
+    <EmbeddedResource Include="Properties\Resources.de.resx" />
+    <EmbeddedResource Include="Properties\Resources.es.resx" />
+    <EmbeddedResource Include="Properties\Resources.fr.resx" />
+    <EmbeddedResource Include="Properties\Resources.kr.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.zh.resx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AsyncClipboardService, Version=1.7.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -248,6 +262,7 @@
     <Compile Include="Core\UI\Controls\Screens\RytlocksCritterRampage.cs" />
     <Compile Include="Core\UI\Controls\Screens\GrandTheftAuto.cs" />
     <Compile Include="Core\UI\Controls\Screens\DarkSouls.cs" />
+    <Compile Include="Core\UI\Controls\Screens\WinXp.cs" />
     <Compile Include="Core\Utils\AnimationUtil.cs" />
     <Compile Include="Core\Utils\FileUtil.cs" />
     <Compile Include="FailScreens.cs" />

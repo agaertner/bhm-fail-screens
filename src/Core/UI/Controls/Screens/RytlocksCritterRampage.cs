@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Blish_HUD;
+﻿using Blish_HUD;
 using Blish_HUD.Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.ComponentModel;
 
 namespace Nekres.FailScreens.Core.UI.Controls.Screens {
@@ -60,7 +59,7 @@ namespace Nekres.FailScreens.Core.UI.Controls.Screens {
         }
 
         private void PlayAnimation() {
-            _soundEffect?.Play(GameService.GameIntegration.Audio.Volume, 0, 0);
+            _soundEffect?.Play(FailScreensModule.Instance.SoundVolume, 0, 0);
 
             // Animate fade
             GameService.Animation.Tweener
@@ -97,7 +96,6 @@ namespace Nekres.FailScreens.Core.UI.Controls.Screens {
         private class TextureData : IDisposable {
 
             private Texture _spriteSheet;
-
             private int     _totalFrames;
             private int     _framesPerRow;
             private int     _framesPerColumn;
