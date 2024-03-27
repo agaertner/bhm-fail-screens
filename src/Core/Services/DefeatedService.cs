@@ -11,7 +11,8 @@ namespace Nekres.FailScreens.Core.Services {
             DarkSouls,
             GrandTheftAuto,
             RytlocksCritterRampage,
-            Windows
+            Windows,
+            AngryPepe
         }
 
         private Control _failScreen;
@@ -51,6 +52,7 @@ namespace Nekres.FailScreens.Core.Services {
                 FailScreens.GrandTheftAuto         => new GrantTheftAuto(),
                 FailScreens.RytlocksCritterRampage => new RytlocksCritterRampage(),
                 FailScreens.Windows                => new WinXp(),
+                FailScreens.AngryPepe              => new AngryPepe(),
                 _                                  => null
             };
         }

@@ -77,7 +77,8 @@ namespace Nekres.FailScreens.Core.UI.Controls.Screens {
                     _timer = GameService.Animation.Tweener.Timer(0.5f).OnComplete(() => {
                         _blueScreenOpacity = 1f;
                         _hideBoxes         = true;
-                        _timer             = GameService.Animation.Tweener.Tween(this, new { _blueScreenOpacity = 0f }, 2f, 1.25f);
+                        _timer             = GameService.Animation.Tweener.Tween(this, new { _blueScreenOpacity = 0f }, 2f, 1.25f)
+                                                        .OnComplete(Dispose);
                     });
                 });
             });
