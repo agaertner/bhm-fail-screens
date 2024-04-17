@@ -22,8 +22,9 @@ namespace Nekres.FailScreens.Core.Services {
         }
 
         private void OnStateChanged(object sender, ValueEventArgs<StateService.State> e) {
+            _failScreen?.Dispose();
+
             if (e.Value != StateService.State.Defeated) {
-                _failScreen?.Dispose();
                 return;
             }
 
