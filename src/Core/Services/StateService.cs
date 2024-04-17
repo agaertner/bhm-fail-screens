@@ -1,4 +1,5 @@
 ﻿using Blish_HUD;
+using Blish_HUD.ArcDps;
 using Blish_HUD.Controls;
 using Blish_HUD.Extended;
 using System;
@@ -20,6 +21,23 @@ namespace Nekres.FailScreens.Core.Services {
 
         private string   _lockFile          = "silence.wav";
         private DateTime _lastLockFileCheck = DateTime.UtcNow.AddSeconds(10);
+
+        public StateService() {
+            GameService.ArcDps.Common.Activate();
+            GameService.ArcDps.RawCombatEvent += ArcDps_RawCombatEvent;
+        }
+
+        private void ArcDps_RawCombatEvent(object sender, RawCombatEventArgs e) {
+            if (e.CombatEvent?.Ev == null || e.EventType != RawCombatEventArgs.CombatEventType.Local || !Convert.ToBoolean(e.CombatEvent.Src.Self)) {
+                return;
+            }
+
+            if (e.CombatEvent.Ev.IsStateChange == ArcDpsEnums.StateChange.ChangeDead) {
+                ChangeState(State.Defeated);
+            } else if (e.CombatEvent.Ev.IsStateChange == ArcDpsEnums.StateChange.ChangeUp) {
+                ChangeState(State.StandBy);
+            }
+        }
 
         public async Task SetupLockFiles(State state) {
             var relLockFilePath = $"{state}\\{_lockFile}";
@@ -56,17 +74,20 @@ namespace Nekres.FailScreens.Core.Services {
 
                 if (File.Exists(backupPath)) {
                     File.Copy(backupPath, path, true);
-                    File.Delete(backupPath);
+                    ScreenNotification.ShowNotification($"{state} playlist reverted. Game restart required.", ScreenNotification.NotificationType.Warning);
                 } else if (File.Exists(path)) {
                     File.Delete(path);
                 }
-                ScreenNotification.ShowNotification($"{state} playlist reverted. Game restart required.", ScreenNotification.NotificationType.Warning);
             } catch (Exception e) {
                 FailScreensModule.Logger.Info(e, e.Message);
             }
         }
 
         public void Update() {
+            if (GameService.ArcDps.Running) {
+                return;
+            }
+
             if (DateTime.UtcNow.Subtract(_lastLockFileCheck).TotalMilliseconds > 100) {
                 _lastLockFileCheck = DateTime.UtcNow;
                 CheckLockFile(State.Defeated);
@@ -90,6 +111,7 @@ namespace Nekres.FailScreens.Core.Services {
         }
 
         public void Dispose() {
+            GameService.ArcDps.RawCombatEvent -= ArcDps_RawCombatEvent;
             //RevertLockFiles(State.Defeated); //TODO
         }
     }

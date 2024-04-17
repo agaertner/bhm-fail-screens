@@ -14,7 +14,7 @@ namespace Nekres.FailScreens.Core.UI.Controls.Screens {
         private Texture2D   _textTex; // font size: 125px, image size: 960x540
         private SoundEffect _soundEffect;
         private float       _textOpacityPercent;
-        private float       _textScalePercent = 0.5f;
+        private float       _textScalePercent = 1f;
         private float       _bgOpacityPercent;
 
         public DarkSouls() {
@@ -51,7 +51,7 @@ namespace Nekres.FailScreens.Core.UI.Controls.Screens {
                                    .RepeatDelay(3).Repeat(1).Reflect();
 
             // Animate text scale
-            GameService.Animation.Tweener.Tween(this, new { _textScalePercent = 1.2f }, 7);
+            GameService.Animation.Tweener.Tween(this, new { _textScalePercent = 1.7f }, 7);
 
             // Animate background fade
             GameService.Animation.Tweener.Tween(this, new { _bgOpacityPercent = 1f }, 1f)
