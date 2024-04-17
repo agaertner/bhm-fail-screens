@@ -4,6 +4,7 @@ using Blish_HUD.Extended;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.ComponentModel;
 
 namespace Nekres.FailScreens.Core.UI.Controls.Screens {
@@ -83,8 +84,8 @@ namespace Nekres.FailScreens.Core.UI.Controls.Screens {
                 return;
             }
 
-            var width  = _textTex.Width;
-            var height = _textTex.Height;
+            var width  = (int)Math.Round(_textTex.Width  * 1.2f);
+            var height = (int)Math.Round(_textTex.Height * 1.2f);
 
             var centerX = (bounds.X + bounds.Width  - width)  / 2;
             var centerY = (bounds.Y + bounds.Height - height) / 2;
