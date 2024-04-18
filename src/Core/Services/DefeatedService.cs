@@ -55,7 +55,7 @@ namespace Nekres.FailScreens.Core.Services {
             }
 
             var pos = GameService.Input.Mouse.PositionRaw;
-            if (Math.Abs(_dblClickPos.X - pos.X) > 5 && Math.Abs(_dblClickPos.Y - pos.Y) > 5) {
+            if (Math.Abs(_dblClickPos.X - pos.X) > 5 || Math.Abs(_dblClickPos.Y - pos.Y) > 5) {
                 _dblClickCount = 0;
                 return;
             }
