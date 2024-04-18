@@ -1,9 +1,12 @@
 ﻿using Blish_HUD;
 using Blish_HUD.Controls;
+using Blish_HUD.Input;
+using Microsoft.Xna.Framework;
 using Nekres.FailScreens.Core.UI.Controls.Screens;
 using System;
+using System.Diagnostics;
 using System.Linq;
-using Blish_HUD.Input;
+using System.Runtime.InteropServices;
 
 namespace Nekres.FailScreens.Core.Services {
     internal class DefeatedService : IDisposable {
@@ -20,7 +23,10 @@ namespace Nekres.FailScreens.Core.Services {
 
         private bool _isSuperAdventureBox;
 
-        private int _dblClickCount;
+        private int       _dblClickCount;
+        private Stopwatch _dblClickWatch;
+        private uint      _dblClickMs;
+        private Point     _dblClickPos;
 
         public DefeatedService() {
             OnMapChanged(GameService.Gw2Mumble.CurrentMap, new ValueEventArgs<int>(GameService.Gw2Mumble.CurrentMap.Id));
@@ -29,18 +35,38 @@ namespace Nekres.FailScreens.Core.Services {
             GameService.Gw2Mumble.CurrentMap.MapChanged   += OnMapChanged;
 
             GameService.Input.Mouse.LeftMouseButtonPressed += OnLeftMouseButtonReleased;
+
+            _dblClickWatch = new Stopwatch();
         }
+
+        [DllImport("user32.dll")]
+        private static extern uint GetDoubleClickTime();
 
         private void OnLeftMouseButtonReleased(object sender, MouseEventArgs e) {
             if (_failScreen == null) {
                 _dblClickCount = 0;
                 return;
             }
+
+            if (_dblClickCount == 0) {
+                _dblClickPos = GameService.Input.Mouse.PositionRaw;
+                _dblClickMs  = GetDoubleClickTime();
+                _dblClickWatch.Restart();
+            }
+
+            var pos = GameService.Input.Mouse.PositionRaw;
+            if (Math.Abs(_dblClickPos.X - pos.X) > 5 && Math.Abs(_dblClickPos.Y - pos.Y) > 5) {
+                _dblClickCount = 0;
+                return;
+            }
+
             _dblClickCount++;
             if (_dblClickCount > 1) {
-                _failScreen?.Dispose();
-                _failScreen    = null;
                 _dblClickCount = 0;
+                if (_dblClickWatch.ElapsedMilliseconds < _dblClickMs) {
+                    _failScreen?.Dispose();
+                    _failScreen = null;
+                }
             }
         }
 
