@@ -45,7 +45,7 @@ namespace Nekres.FailScreens {
                                                   () => "Ignores selection if set.");
 
             var soundCol = settings.AddSubCollection("sound", true, () => "Sound Options"); 
- Volume = soundCol.DefineSetting("volume", 0.05f,   
+            Volume = soundCol.DefineSetting("volume", 0.05f,   
                                             () => "Volume",
                                             () => "Adjusts the audio volume.");
             Muted = soundCol.DefineSetting("mute",   false,
