@@ -16,7 +16,8 @@ namespace Nekres.FailScreens.Core.Services {
             GrandTheftAuto,
             RytlocksCritterRampage,
             Windows,
-            AngryPepe
+            AngryPepe,
+            SekiroShadowsDieTwice
         }
 
         private Control _failScreen;
@@ -100,7 +101,14 @@ namespace Nekres.FailScreens.Core.Services {
                 screen = (FailScreens)RandomUtil.GetRandom(min, max);
             }
 
-            var buildScreen = CreateFailScreen(screen);
+            Control buildScreen;
+
+            try {
+                buildScreen = CreateFailScreen(screen);
+            } catch (Exception ex) {
+                FailScreensModule.Logger.Warn(ex, $"Failed to construct {screen}.");
+                return;
+            }
 
             if (buildScreen == null) {
                 return;
@@ -118,6 +126,7 @@ namespace Nekres.FailScreens.Core.Services {
                 FailScreens.RytlocksCritterRampage => new RytlocksCritterRampage(),
                 FailScreens.Windows                => new WinXp(),
                 FailScreens.AngryPepe              => new AngryPepe(),
+                FailScreens.SekiroShadowsDieTwice  => new Sekiro(),
                 _                                  => null
             };
         }

@@ -135,4 +135,7 @@
   <data name="Fail" xml:space="preserve">
     <value>Versagt</value>
   </data>
+  <data name="Death" xml:space="preserve">
+    <value>Tod</value>
+  </data>
 </root>
