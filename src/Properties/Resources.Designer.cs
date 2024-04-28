@@ -80,6 +80,15 @@ namespace Nekres.FailScreens.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Death.
+        /// </summary>
+        internal static string Death {
+            get {
+                return ResourceManager.GetString("Death", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         internal static string Error {

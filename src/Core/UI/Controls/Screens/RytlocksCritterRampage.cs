@@ -72,7 +72,7 @@ namespace Nekres.FailScreens.Core.UI.Controls.Screens {
         }
         
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds) {
-            if (Parent == null) {
+            if (Parent == null || _sadRytlockSheet0 == null) {
                 return;
             }
 

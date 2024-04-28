@@ -39,6 +39,7 @@
     <!-- Exclude AssemblyInfo.cs of submodule projects to avoid duplication error (Compile Error CS0579) -->
     <Compile Remove="..\submodules\**\AssemblyInfo.cs" />
     <Compile Include="Core\UI\Controls\Screens\AngryPepe.cs" />
+    <Compile Include="Core\UI\Controls\Screens\Sekiro.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
