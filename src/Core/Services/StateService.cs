@@ -23,8 +23,19 @@ namespace Nekres.FailScreens.Core.Services {
         private DateTime _lastLockFileCheck = DateTime.UtcNow.AddSeconds(10);
 
         public StateService() {
-            GameService.ArcDps.Common.Activate();
-            GameService.ArcDps.RawCombatEvent += ArcDps_RawCombatEvent;
+            FailScreensModule.Instance.UseArcDps.SettingChanged += OnUseArcDpsChanged;
+            ToggleArcDps(FailScreensModule.Instance.UseArcDps.Value);
+        }
+
+        private void OnUseArcDpsChanged(object sender, ValueChangedEventArgs<bool> e) => ToggleArcDps(e.NewValue);
+
+        private void ToggleArcDps(bool enabled) {
+            if (enabled) {
+                GameService.ArcDps.Common.Activate();
+                GameService.ArcDps.RawCombatEvent += ArcDps_RawCombatEvent;
+            } else {
+                GameService.ArcDps.RawCombatEvent -= ArcDps_RawCombatEvent;
+            }
         }
 
         private void ArcDps_RawCombatEvent(object sender, RawCombatEventArgs e) {
@@ -84,7 +95,7 @@ namespace Nekres.FailScreens.Core.Services {
         }
 
         public void Update() {
-            if (GameService.ArcDps.Running) {
+            if (FailScreensModule.Instance.UseArcDps.Value && GameService.ArcDps.Running) {
                 return;
             }
 
@@ -111,8 +122,8 @@ namespace Nekres.FailScreens.Core.Services {
         }
 
         public void Dispose() {
-            GameService.ArcDps.RawCombatEvent -= ArcDps_RawCombatEvent;
-            //RevertLockFiles(State.Defeated); //TODO
+            FailScreensModule.Instance.UseArcDps.SettingChanged -= OnUseArcDpsChanged;
+            GameService.ArcDps.RawCombatEvent                   -= ArcDps_RawCombatEvent;
         }
     }
 }
