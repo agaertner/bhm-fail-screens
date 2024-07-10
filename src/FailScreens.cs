@@ -32,6 +32,7 @@ namespace Nekres.FailScreens {
         internal SettingEntry<bool>                        Random;
         internal SettingEntry<float>                       Volume;
         internal SettingEntry<bool>                        Muted;
+        internal SettingEntry<bool>                        UseArcDps;
 
         internal float SoundVolume = 1f;
 
@@ -52,6 +53,9 @@ namespace Nekres.FailScreens {
                                            () => "Mute",
                                            () => "Mutes the audio.");
 
+            var generalCol = settings.AddSubCollection("general", true, () => "General");
+            UseArcDps = generalCol.DefineSetting("use_arcdps", false, () => "Use ArcDps for Detection", () => "Use ArcDps Bridge for Defeated state detection if available.\nBy default (ie. disabled), the module checks if the game accesses a dummy sound file referenced in /Documents/Guild Wars 2/music/Defeated.m3u.");
+
             Volume.SetRange(0, 0.1f);
             Volume.SetValidation(ValidateVolume);
             if (!ValidateVolume(Volume.Value).Valid) {
@@ -64,8 +68,8 @@ namespace Nekres.FailScreens {
         }
 
         protected override void Initialize() {
-            State                    =  new StateService();
-            Defeated                 =  new DefeatedService();
+            State    = new StateService();
+            Defeated = new DefeatedService();
         }
 
         protected override async Task LoadAsync() {
