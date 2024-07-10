@@ -1,6 +1,6 @@
 {
   "name": "Fail Screens",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "namespace": "Nekres.FailScreens",
   "package": "FailScreensModule.dll",
   "manifest_version": 1,
