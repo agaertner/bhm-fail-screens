@@ -5,7 +5,9 @@ using Blish_HUD.Settings;
 using Microsoft.Xna.Framework;
 using Nekres.FailScreens.Core.Services;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Nekres.FailScreens {
@@ -28,11 +30,12 @@ namespace Nekres.FailScreens {
         internal StateService    State;
         internal DefeatedService Defeated;
 
-        internal SettingEntry<DefeatedService.FailScreens> FailScreen;
-        internal SettingEntry<bool>                        Random;
-        internal SettingEntry<float>                       Volume;
-        internal SettingEntry<bool>                        Muted;
-        internal SettingEntry<bool>                        UseArcDps;
+        internal SettingEntry<DefeatedService.FailScreens>     FailScreen;
+        internal SettingEntry<bool>                            Random;
+        internal Dictionary<DefeatedService.FailScreens, SettingEntry<bool>> ToggleScreens;
+        internal SettingEntry<float>                           Volume;
+        internal SettingEntry<bool>                            Muted;
+        internal SettingEntry<bool>                            UseArcDps;
 
         internal float SoundVolume = 1f;
 
@@ -44,7 +47,13 @@ namespace Nekres.FailScreens {
             Random     = visualsCol.DefineSetting("random",      true,
                                                   () => "Randomize",
                                                   () => "Ignores selection if set.");
-
+            var screensCol = visualsCol.AddSubCollection("screens", true, () => "Randomizer Toggles");
+            ToggleScreens = new Dictionary<DefeatedService.FailScreens, SettingEntry<bool>>();
+            foreach (var screen in Enum.GetValues(typeof(DefeatedService.FailScreens)).Cast<DefeatedService.FailScreens>()) {
+                ToggleScreens.Add(screen, screensCol.DefineSetting("enable_" + screen.ToString().ToLower(), true,
+                                                                   () => "Enable " + screen.ToString().SplitCamelCase(),
+                                                                   () => "Enable or disable the \"" + screen.ToString().SplitCamelCase() + "\" screen for randomization."));
+            }
             var soundCol = settings.AddSubCollection("sound", true, () => "Sound Options"); 
             Volume = soundCol.DefineSetting("volume", 0.05f,   
                                             () => "Volume",
