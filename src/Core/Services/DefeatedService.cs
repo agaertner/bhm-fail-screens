@@ -93,30 +93,35 @@ namespace Nekres.FailScreens.Core.Services {
             _failScreen?.Dispose();
             _failScreen = null;
 
-            var screen = FailScreensModule.Instance.FailScreen.Value;
-
-            if (FailScreensModule.Instance.Random.Value) {
-                var min = Enum.GetValues(typeof(FailScreens)).Cast<int>().Min();
-                var max = Enum.GetValues(typeof(FailScreens)).Cast<int>().Max();
-                screen = (FailScreens)RandomUtil.GetRandom(min, max);
+            var  screen = FailScreensModule.Instance.FailScreen.Value;
+            bool notAllDisabled = FailScreensModule.Instance.ToggleScreens.Values.Any(x => x.Value);
+            if (FailScreensModule.Instance.Random.Value && notAllDisabled) {
+                screen = GetRandomScreenType();
             }
-
             Control buildScreen;
-
             try {
                 buildScreen = CreateFailScreen(screen);
             } catch (Exception ex) {
                 FailScreensModule.Logger.Warn(ex, $"Failed to construct {screen}.");
                 return;
             }
-
             if (buildScreen == null) {
                 return;
             }
-
             buildScreen.Parent = GameService.Graphics.SpriteScreen;
             buildScreen.Size   = GameService.Graphics.SpriteScreen.Size;
             _failScreen        = buildScreen;
+        }
+
+        private FailScreens GetRandomScreenType() {
+            var  min = Enum.GetValues(typeof(FailScreens)).Cast<int>().Min();
+            var  max = Enum.GetValues(typeof(FailScreens)).Cast<int>().Max();
+            var  screen = (FailScreens)RandomUtil.GetRandom(min, max);
+            bool isEnabled = FailScreensModule.Instance.ToggleScreens[screen].Value;
+            if (!isEnabled) {
+                screen = GetRandomScreenType();
+            }
+            return screen;
         }
 
         private Control CreateFailScreen(FailScreens failScreen) {
